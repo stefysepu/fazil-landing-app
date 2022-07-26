@@ -3166,4 +3166,65 @@
     });
     
 </script>
+<script>
 
+  setTimeout(function () {
+
+    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var firebaseConfig = {
+      apiKey: "AIzaSyBKodGfpWSX7rgoJns5up8g2fpBQ_oHLYs",
+      authDomain: "cl-fazil-registro-newsletter.firebaseapp.com",
+      databaseURL: "https://cl-fazil-registro-newsletter-default-rtdb.firebaseio.com",
+      projectId: "cl-fazil-registro-newsletter",
+      storageBucket: "cl-fazil-registro-newsletter.appspot.com",
+      messagingSenderId: "705188154955",
+      appId: "1:705188154955:web:ff4949ad78bf2e48e187ce",
+      measurementId: "G-71W7S1B67E"
+
+    };
+
+    const formularioEmpresa = document.getElementById("form_emp");
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const dbRef = firebase.database().ref('cl-fazil-registros-newsletter')
+
+    formularioEmpresa.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      var email = document.getElementById('email').value;
+
+      date = new Date();
+      year = date.getFullYear();
+      month = date.getMonth() + 1;
+      day = date.getDate();
+
+      if (Fn.validar_email(email)) {
+
+        const registerUser = dbRef.push()
+        registerUser.set({
+          Email: email,
+          Fecha: month + "/" + day + "/" + year,
+        })
+
+        //Swal.fire("Hemos recibido tus respuestas con éxito","Gracias por participar","success");
+        document.getElementById("form_emp").reset();
+
+      } else {
+        alert("Debe ingresar email correcto.");
+      }
+    })
+  }, 1000);
+      </script>
+      <script>
+        function validar_email(email) {
+          var email_validar = email;
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          if (pattern.test(email_validar)) {
+            console.log('email correcto');
+            document.getElementById("emailerror").style.display = "none";
+          } else {
+            console.log('email incorrecto');
+            document.getElementById("emailerror").style.display = "block";
+          }
+        } 
+      </script>
